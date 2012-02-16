@@ -12,11 +12,15 @@ namespace CovarianceAndContravarianceTests
         [TestMethod]
         public void Func_Generics_Parameter_Contravariance()
         {
-            var func = new Func<Person, Person>(p => p);
-            
-            // paramatere contravariant: from person -> employee (from "narrower" -> to "wider")
-            Person animal = func(new Employee { Age = 32 });
-            Assert.IsInstanceOfType(animal, typeof(Employee));
+            var func1 = new Func<Person, Person>(p => { p.Name = "x"; return p; });
+            var func2 = new Func<Employee, Person>(e => { e.Name = "y"; return e; });
+
+            func2 = func1;
+
+            //This errors.
+            //var person = func2(new Person { Age = 32 });
+            var person = func2(new Employee { Age = 32 });
+            Assert.AreEqual(person.Name, "x");
         }
 
         [TestMethod]
@@ -27,7 +31,8 @@ namespace CovarianceAndContravarianceTests
 
             func2 = func1;
 
-            // paramatere contravariant: from person -> employee (from "narrower" -> to "wider")
+            //This errors.
+            //Person returnValue = func2(new Employee { Age = 32 });
             Animal returnValue = func2(new Employee { Age = 32 });
             Assert.IsInstanceOfType(returnValue, typeof(Person));
             Assert.AreEqual("britton", ((Person)returnValue).Name);
