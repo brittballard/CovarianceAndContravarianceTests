@@ -1,0 +1,14 @@
+# Specific Files
+Thumbs.db
+StyleCop.Cache
+
+# Extensions
+*.suo
+*.csproj.user
+*.Resharper.user
+
+# Directories
+bin
+obj
+_ReSharper.*
+TestResults
